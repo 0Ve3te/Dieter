@@ -1,0 +1,142 @@
+﻿@model Dieter.Models.Recipe
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="container bg-light px-5 border border-1">
+
+    <h1 class="text-center">Tworzenie nowego przepisu</h1>
+    <hr />
+
+    <form asp-action="Create" class="p-5 row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Podaj nazwę przepisu..." />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label asp-for="ImgUrl" class="control-label"></label>
+                <input asp-for="ImgUrl" class="form-control" placeholder="Link do zdjęcia np. - https://imgur.com/pLGbDQR.jpeg" />
+                <small id="emailHelp" class="form-text text-muted">Podaj link do zdjęcia w formacie .jpg lub .png (darmowy hosting zdjęć - <a target="_blank" href="https://imgur.com/upload">imgur.com</a>).</small>
+                <span asp-validation-for="ImgUrl" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea id="editor" asp-for="Description" class="form-control" placeholder="Opis powinien zawierać maksymalnie 500 znaków."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-xl-6 overflow-hidden">
+            <div class="form-group overflow-hidden">
+                <label>Wyszukaj produkty z bazy danych</label>
+                <select required class="form-control" id="SearchInput" name="searchIds" style="width:100% !important; max-width:50px;"></select>
+            </div>
+        </div>
+        <div class="col-12 col-xl-6">
+            <div class="form-group">
+                <label>Wpisz ilości potrzebnych składników oddzielając je przecinkiem</label>
+                @*<input type="text" name="tags" class="form-control tagin" data-duplicatetagin-="true" data-tagin-placeholder="Podaj po przecinku ilości produktów" />*@
+                <input asp-for="Ammounts" class="form-control tagin" data-duplicatetagin-="true" data-tagin-placeholder="Podaj po przecinku ilości produktów" />
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label asp-for="CategoriesIds" class="control-label"></label>
+                <select asp-for="CategoriesIds" class="form-control" asp-items="ViewBag.CategoryId" required></select>
+            </div>
+        </div>
+        @if (TempData["ErrorInfo"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @Html.Raw(TempData["ErrorInfo"])
+            </div>
+        }
+
+        <div class="form-group d-none d-md-flex justify-content-between">
+            <input type="submit" value="Zapisz przepis" class="btn btn-success" />
+            <a class="btn btn-secondary" asp-action="Index">Wróć do listy przepisów</a>
+        </div>
+        <div class="d-block d-md-none">
+            <input type="submit" value="Zapisz produkt" class="btn btn-success btn-sm my-2" />
+            <a asp-action="Index" class="btn btn-secondary btn-sm">Wróć do listy produktów</a>
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="~/js/tagin.min.js"></script>
+<link rel="stylesheet" href="~/css/tagin.min.css" />
+
+<script src="https://cdn.tiny.cloud/1/xhqgakhggodairtclysnakgbf7do0ikutty8r5hm18befk1a/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+      selector: 'textarea#editor',
+      menubar: false
+    });
+</script>
+
+<script>
+    function formatState(state) {
+        if(!state.id) {
+            return state.text;
+        }
+
+        var $state = $('<b>'+state.text+'</b>, <i>'+state.kcal+' kcal</i> <br/>'+state.src);
+        return $state;
+    };
+
+
+    $(document).ready(function () {
+
+        $("#SearchInput").select2({
+          placeholder: 'Nazwa produktu...',
+          allowClear: true,
+          multiple: true,
+          templateResult: formatState,
+          ajax: {
+              type: 'GET',
+              url: '/recipes/searchtest',
+              contentType: "application/json; charset=utf-8",
+              data: function (params) {
+                      var query =
+                      {
+                          term: params.term,
+                      };
+                      return query;
+              },
+              processResults: function (data) {
+                  return {
+                      results: $.map(data, function(item) {
+                          return {
+                              text: item.name,
+                              id: item.id,
+                              kcal: item.kcal,
+                              src: item.emoji
+                          }
+                      })
+                  };
+              }
+          }
+        });
+
+       const tagin = new Tagin(document.querySelector('.tagin'), {
+            duplicate: true
+       } );
+
+    });
+
+</script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

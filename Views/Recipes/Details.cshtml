@@ -1,0 +1,110 @@
+﻿@model Dieter.Models.DetailsRecipeViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    var kcal = 0.0;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-7 col-lg-8">
+            <img class="img-fluid rounded" src="@Html.Raw(Model.Recipe.ImgUrl)" style="max-height:444px;" />
+        </div>
+        <div class="col-12 col-md-5 col-lg-4">
+            <h1>@Html.DisplayFor(model => model.Recipe.Name)</h1>
+            <div id="categories">
+                @foreach (var category in Model.Categories)
+                {
+                    <span class="badge rounded-pill bg-success">@category.Name</span>
+                }
+            </div>
+            <hr />
+            <h4 class="my-3">Składniki</h4>
+            <div id="products">
+                <ul class="list-group">
+                    @foreach (var product in Model.Products)
+                    {
+                        @foreach (var recipeProduct in Model.RecipeProducts)
+                        {
+                            @if (recipeProduct.ProductId == product.Id)
+                            {
+                                  <li class="list-group-item">
+                                        <input type="checkbox" class="form-check-input mx-3" id="@product.Name"/>
+                                        <label for="@product.Name">@recipeProduct.Ammount @product.Name [@(recipeProduct.Ammount*100)g]</label>
+                                        <span class="d-none">@(kcal = kcal+(Convert.ToDouble(product.Kcal) * recipeProduct.Ammount))kcal</span>
+                                  </li>
+
+                            }
+                        }
+                    }
+                    </ul>
+                
+            </div>
+            <h5 class="my-3 fw-light">Szacowana ilość kalorii: @(Convert.ToInt32(kcal))</h5>
+        </div>
+        <div class="col-12">
+            <h4 class="my-3">Przygotowanie</h4>
+            <div class="instruction">
+                @Html.Raw(Model.Recipe.Description)
+            </div>
+        </div>
+    </div>
+</div>
+@*<img class="img img-fluid" src="@Html.Raw(Model.Recipe.ImgUrl)">*@
+
+</div>
+
+
+@*<h4>Recipe</h4>
+    <hr />
+    <dl class="row">
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Recipe.Name)
+    </dt>
+    <dd class="col-sm-10">
+    @Html.DisplayFor(model => model.Recipe.Name)
+    </dd>
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Recipe.ImgUrl)
+    </dt>
+    <dd class="col-sm-10">
+    @Html.DisplayFor(model => model.Recipe.ImgUrl)
+    </dd>
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Recipe.Description)
+    </dt>
+    <dd class="col-sm-10">
+    @Html.Raw(Model.Recipe.Description)
+    </dd>
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Products)
+    </dt>
+    <dd class="col-sm-10">
+    <ul>
+
+    @foreach(var product in Model.Products)
+    {
+    foreach (var RecipeProduct in Model.RecipeProducts)
+    {
+    if (product.Id == RecipeProduct.ProductId)
+    {
+    <li>@product.Name - @RecipeProduct.Ammount</li>
+
+    }
+    }
+    }
+    </ul>
+    </dd>
+    <dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.Categories)
+    </dt>
+    <dd class="col-sm-10">
+    <ol>
+
+    @foreach(var category in Model.Categories)
+    {
+    <li>@category.Name</li>
+    }
+    </ol>
+    </dd>
+    </dl>*@

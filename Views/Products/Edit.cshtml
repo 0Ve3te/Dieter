@@ -1,0 +1,51 @@
+﻿@model Dieter.Models.Product
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kcal" class="control-label"></label>
+                <input asp-for="Kcal" class="form-control" />
+                <span asp-validation-for="Kcal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Emoji" class="control-label"></label>
+                <input id="emojiPicker" asp-for="Emoji" class="form-control" />
+                <span asp-validation-for="Emoji" class="text-danger"></span>
+                <button id="ClearEmojiArea" type="button" class="btn btn-outline-secondary btn-sm my-2">Wyczyść</button>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+<script>
+    inicializeEmoji();
+</script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

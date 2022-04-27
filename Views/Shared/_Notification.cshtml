@@ -1,0 +1,16 @@
+﻿@if (TempData["notification"] != null)
+{
+    <div class="toast-container position-absolute top-0 end-0 p-0" style="margin-top:75px;">
+        <div class="toast show" role="alert">
+            <div class="toast-header">
+                <i class="bi bi-circle-fill text-success me-2"></i>
+                <strong class="me-auto">Dieter</strong>
+                <small>Powiadomienie</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                @TempData["notification"]
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,99 @@
+﻿@model RecipeViewModel
+
+@{
+    ViewData["Title"] = "Przepisy";
+}
+
+<div class="bg-image text-center shadow-lg rounded text-white" style="background-image: url('/img/food-background.jpg'); background-position-y:50%; background-size:cover;">
+    <div style="background-color: rgba(0, 0, 0, 0.4);">
+        <h1 class="p-5 h2">Dieter - Gotuj z nami!</h1>
+        <p class="p-5">
+            Korzystaj z setek przepisów lub dodawaj własne korzystając z naszej wciąż rozwijającej się <a class="text-warning fw-bold" asp-action="Index" asp-controller="Products">bazy produktów</a>. </br>
+            Jeśli brakuje ci jakiegoś składnika,
+            możesz go dodać za pomocą kilku kliknięć - <a class="text-warning fw-bold" asp-action="Create" asp-controller="Products">dodaj własny produkt</a>.
+        </p>
+    </div>
+</div>
+
+<p class="text-center">
+    <a class="btn btn-primary" asp-action="Create">Dodaj przepis</a> 
+</p>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+  <input id="findRecipe" type="text" class="form-control" placeholder="Podaj nazwę przepisu..." aria-label="Nazwa przepisu">
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4">
+    @foreach (Recipe item in Model.Recipes)
+    {
+        <div class="col my-3 recipeCard" id="@item.Id">
+            <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
+                <div class="card h-100">
+                    <img src='@item.ImgUrl' class="d-flex card-img-top responsive-img" height="180" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        @foreach (CategoryRecipe catRec in Model.CategoriesRecipes)
+                        {
+                            if (item.Id == catRec.RecipeId)
+                            {
+                                @foreach (Category cat in Model.Categories)
+                                {
+                                    if (cat.Id == catRec.CategoryId)
+                                    {
+                                        <span class="badge rounded-pill bg-success">@cat.Name </span>
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        const allRecipes = document.querySelectorAll('.recipeCard');
+
+        $(document).ready(function () {
+            $("#findRecipe").keyup(function () {
+                var text = $("#findRecipe").val();
+                if (text.length == 0) return showAllRecipe();
+
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("FindRecipe")",
+                    data: {term: text},
+                    success: function (msg) {
+                        showData(msg);
+                    },
+                    error: function (req, status, error) {
+                        console.error(error);
+                    }
+                })
+
+            });
+        });
+
+        function showData(msg) {
+                for (const cardRecipe of allRecipes) { //Przejście po wszystkich kartach z przepisami
+                    for (const recipe of msg) { //Przejście po szukanych przepisach
+                        if (cardRecipe.id == recipe.id) {
+                            cardRecipe.style = "display:block";
+                            break;
+                        } else {
+                            cardRecipe.style = "display:none";
+                        }
+                    };
+            };
+        };
+
+        function showAllRecipe() {
+            for (const cardRecipe of allRecipes) {
+                cardRecipe.style = "display: block";
+            }
+        }
+    </script>
+}

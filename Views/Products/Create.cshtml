@@ -1,0 +1,49 @@
+﻿@model Dieter.Models.Product
+
+@{
+    ViewData["Title"] = "Dodaj produkt";
+}
+
+<div class="container bg-light px-5 border border-1">
+
+    <h1 class="text-center">Tworzenie nowego produktu</h1>
+    <hr />
+
+    <form asp-action="Create" class="p-5">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Podaj nazwę produktu" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Kcal" class="control-label"></label>
+            <input asp-for="Kcal" class="form-control" placeholder="Ilość kcal w 1 produkcie lub 100 gramach" />
+            <span asp-validation-for="Kcal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Emoji" class="control-label"></label>
+            <input id="emojiPicker" asp-for="Emoji" class="form-control" placeholder="Kliknij w ikonkę i wybierz emoji" />
+            <span asp-validation-for="Emoji" class="text-danger"></span>
+            <button id="ClearEmojiArea" type="button" class="btn btn-outline-secondary btn-sm my-2">Wyczyść</button>
+        </div>
+        <div class="form-group d-none d-md-flex justify-content-between">
+            <input type="submit" value="Zapisz produkt" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-secondary">Wróć do listy produktów</a>
+        </div>
+        <div class="form-group d-block d-md-none justify-content-between">
+            <input type="submit" value="Zapisz produkt" class="btn btn-success btn-sm my-2" />
+            <a asp-action="Index" class="btn btn-secondary btn-sm">Wróć do listy produktów</a>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+<script>
+    inicializeEmoji();
+</script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

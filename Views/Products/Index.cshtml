@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Dieter.Models.Product>
+
+@{
+    ViewData["Title"] = "Produkty";
+}
+
+<h1>Baza naszych produktów <i class="bi bi-basket"></i></h1>
+
+<partial name="_Notification" />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj nowy produkt</a>
+</p>
+<table class="table table-primary table-striped table-hover table-responsive text-center">
+    <thead class="d-none d-md-block">
+        <tr class="row row-cols-1 row-cols-md-3">
+            <th class="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th class="col">
+                @Html.DisplayNameFor(model => model.Kcal)
+            </th>
+            <th class="col">
+                @Html.DisplayNameFor(model => model.Emoji)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="row row-cols-1 row-cols-md-3">
+                <td class="col">
+                    <span class="d-block d-md-none fw-bold">@Html.DisplayNameFor(model => model.Name)</span>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="col">
+                    <span class="d-block d-md-none fw-bold">@Html.DisplayNameFor(model => model.Kcal)</span>
+                    @Html.DisplayFor(modelItem => item.Kcal)
+                </td>
+                <td class="col">
+                   <span class="d-block d-md-none fw-bold">@Html.DisplayNameFor(model => model.Emoji)</span>
+                    @Html.Raw(item.Emoji)
+                </td>
+                @*            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

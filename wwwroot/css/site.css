@@ -1,0 +1,42 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.form-group {
+    margin: 15px 0;
+}
+
+
+@media (max-width: 575px) {
+    .responsive-img {
+        height: auto;
+        width: 100%;
+    }
+}
+
+.card {
+    overflow: hidden;
+}
+
+.responsive-img{
+    transition: all 0.2s linear;
+}
+
+.card-img-top:hover {
+    transform: scale(1.1);
+}
