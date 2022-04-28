@@ -74,10 +74,10 @@ namespace Dieter.Controllers
                     if (productInfo.ProductId == product.Id)
                     {
                         DetailsVM.Products.Add(product); //powstaje lista produktów powiązanych z przepisem
+                        DetailsVM.kcalSum = DetailsVM.kcalSum + (product.Kcal * productInfo.Ammount);
                     }
                 }
             }
-
             return View(DetailsVM);
         }
 

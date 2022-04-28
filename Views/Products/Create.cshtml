@@ -22,7 +22,7 @@
             <span asp-validation-for="Kcal" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Emoji" class="control-label"></label>
+            <label asp-for="Emoji" class="control-label"></label>S
             <input id="emojiPicker" asp-for="Emoji" class="form-control" placeholder="Kliknij w ikonkę i wybierz emoji" />
             <span asp-validation-for="Emoji" class="text-danger"></span>
             <button id="ClearEmojiArea" type="button" class="btn btn-outline-secondary btn-sm my-2">Wyczyść</button>
@@ -43,7 +43,7 @@
     inicializeEmoji();
 </script>
 
-    @{
+   @* @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    }*@
 }
