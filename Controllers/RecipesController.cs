@@ -54,10 +54,11 @@ namespace Dieter.Controllers
             DetailsVM.Recipe = recipe; //obiekt przepis zawierający informacje o przepisie
             DetailsVM.RecipeProducts = await _context.RecipeProducts.Where(p => p.RecipeId == recipe.Id).ToListAsync(); //do listy produktów zapisujemy wszystkie informacje dotyczące konkretnego przepisu
             List<Product> products = _context.Products.ToList();
+            List<Category> categories = _context.Categories.ToList();
 
             foreach (CategoryRecipe categoriesRecipe in _context.CategoryRecipe.Where(c => c.RecipeId == DetailsVM.Recipe.Id))
             {
-                foreach (Category category in _context.Categories)
+                foreach (Category category in categories)
                 {
                     if (category.Id == categoriesRecipe.CategoryId)
                     {
