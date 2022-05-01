@@ -16,6 +16,7 @@ namespace Dieter.Models
         [MaxLength(128, ErrorMessage = "Należy wybrać tylko jedną emotkę.")]
         [Display(Name = "Emoji")]
         public string? Emoji { get; set; }
+        public bool HideAmmounts { get; set; }
         public virtual Recipe? Recipes { get; set; }
     }
 }

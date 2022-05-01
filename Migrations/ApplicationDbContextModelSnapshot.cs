@@ -131,6 +131,9 @@ namespace Dieter.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
+                    b.Property<bool>("HideAmmounts")
+                        .HasColumnType("bit");
+
                     b.Property<double>("Kcal")
                         .HasColumnType("float");
 

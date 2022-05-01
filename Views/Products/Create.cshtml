@@ -21,6 +21,10 @@
             <input asp-for="Kcal" class="form-control" placeholder="Ilość kcal w 1 produkcie lub 100 gramach" />
             <span asp-validation-for="Kcal" class="text-danger"></span>
         </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" asp-for="HideAmmounts" id="anmmount" checked="">
+          <label class="form-check-label" asp-for="HideAmmounts">Odznacz tę opcję, jeśli podano niestandardową ilość produktu (np. kcal dla 1 łyżki produktu)</label>
+        </div>
         <div class="form-group">
             <label asp-for="Emoji" class="control-label"></label>S
             <input id="emojiPicker" asp-for="Emoji" class="form-control" placeholder="Kliknij w ikonkę i wybierz emoji" />

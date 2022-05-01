@@ -4,7 +4,7 @@
 
 namespace Dieter.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,8 +69,9 @@ namespace Dieter.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Kcal = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Emoji = table.Column<string>(type: "nvarchar(118)", maxLength: 118, nullable: false),
+                    Kcal = table.Column<double>(type: "float", nullable: false),
+                    Emoji = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: true),
+                    HideAmmounts = table.Column<bool>(type: "bit", nullable: false),
                     RecipesId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

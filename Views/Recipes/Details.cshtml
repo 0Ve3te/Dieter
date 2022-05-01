@@ -29,8 +29,15 @@
                             {
                                   <li class="list-group-item">
                                         <input type="checkbox" class="form-check-input mx-3" id="@product.Name"/>
-                                        <label for="@product.Name">@recipeProduct.Ammount @product.Name [@(recipeProduct.Ammount*100)g]</label>
-                                  </li>
+                                        @if(product.HideAmmounts == false)
+                                        {
+                                            <label for="@product.Name">@recipeProduct.Ammount @product.Name [@(recipeProduct.Ammount*100)g]</label>
+                                        } 
+                                        else
+                                        {
+                                            <label for="@product.Name">@recipeProduct.Ammount @product.Name</label>
+                                        }
+                                </li>
 
                             }
                         }

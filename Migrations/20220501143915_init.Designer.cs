@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dieter.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220426130400_Init")]
-    partial class Init
+    [Migration("20220501143915_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,13 +130,14 @@ namespace Dieter.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Emoji")
-                        .IsRequired()
-                        .HasMaxLength(118)
-                        .HasColumnType("nvarchar(118)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("Kcal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("HideAmmounts")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Kcal")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
